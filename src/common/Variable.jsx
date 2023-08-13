@@ -4,7 +4,7 @@ export const navigateToUserRegister = "/readbook/userregister";
 export const navigateToBookRegister = "/readbook/bookregister";
 export const navigateToBookRegisteredList = "/readbook/bookregisterlist";
 export const navigateToReceiveRegister = "/readbook/receive";
-export const navigateToDashboard = "/readbook";
+export const navigateToDashboard = "/readbook/";
 export const navigateToCart = "/readbook/cartlist";
 export const navigateToFavorite = "/readbook/favoritelist";
 
