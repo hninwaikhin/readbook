@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/readbook/static/css/main.48a411ea.css",
+    "main.js": "/readbook/static/js/main.0b4e3aaa.js",
+    "static/js/787.f4810603.chunk.js": "/readbook/static/js/787.f4810603.chunk.js",
+    "index.html": "/readbook/index.html",
+    "main.48a411ea.css.map": "/readbook/static/css/main.48a411ea.css.map",
+    "main.0b4e3aaa.js.map": "/readbook/static/js/main.0b4e3aaa.js.map",
+    "787.f4810603.chunk.js.map": "/readbook/static/js/787.f4810603.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.48a411ea.css",
+    "static/js/main.0b4e3aaa.js"
+  ]
+}
