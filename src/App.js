@@ -19,7 +19,7 @@ function App() {
     <>
       <div className="relative font-['helvetica'] text-lg w-[2040px] h-[1500px]">
         <Routes>
-          <Route path='/' element={<Dashboard />} />
+          <Route path='/readbook/' element={<Dashboard />} />
           <Route path={navigateToLogin} element={<Login />} />
           <Route path={navigateToUserRegister} element={<UserRegister />} />
           <Route path={navigateToBookRegister} element={<BookFormRegister />} />
