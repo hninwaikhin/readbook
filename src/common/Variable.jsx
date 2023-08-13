@@ -1,12 +1,12 @@
 
-export const navigateToLogin = "/login";
-export const navigateToUserRegister = "/userregister";
-export const navigateToBookRegister = "/bookregister";
-export const navigateToBookRegisteredList = "/bookregisterlist";
-export const navigateToReceiveRegister = "/receive";
-export const navigateToDashboard = "/dashboard";
-export const navigateToCart = "/cartlist";
-export const navigateToFavorite = "/favoritelist";
+export const navigateToLogin = "/readbook/login";
+export const navigateToUserRegister = "/readbook/userregister";
+export const navigateToBookRegister = "/readbook/bookregister";
+export const navigateToBookRegisteredList = "/readbook/bookregisterlist";
+export const navigateToReceiveRegister = "/readbook/receive";
+export const navigateToDashboard = "/readbook/dashboard";
+export const navigateToCart = "/readbook/cartlist";
+export const navigateToFavorite = "/readbook/favoritelist";
 
 export const Tables = {
     User: "User",
