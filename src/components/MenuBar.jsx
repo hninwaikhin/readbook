@@ -4,11 +4,12 @@ import { BiBookAdd } from "react-icons/bi";
 import { BsCart, BsFillCartFill } from "react-icons/bs";
 import { FcAbout } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-import { navigateToBookRegisteredList, navigateToCart, navigateToDashboard, navigateToFavorite } from "../common/Variable";
+import { navigateToBookRegisteredList, navigateToCart, navigateToDashboard, navigateToFavorite, navigateToOrder } from "../common/Variable";
 import { useSelector } from "react-redux";
 import { GetCartList, GetFavoriteList } from "../slice/bookListSlice";
 import { useState } from "react";
 import { About } from "./About";
+import { FaUser } from "react-icons/fa";
 
 export function MenuBar(props) {
     const navigate = useNavigate();
@@ -38,6 +39,10 @@ export function MenuBar(props) {
         );
     }
 
+    function handleUserOrderBtnClick() {
+        navigate(navigateToOrder);
+    }
+
     return (
         <>
             <div className="relative bg-[#737373] h-[68px] w-[1961px] ml-[9px] rounded-md">
@@ -52,6 +57,7 @@ export function MenuBar(props) {
                     <div className="w-[1500px]">
                         <SearchBar onSearch={props.onSearch}></SearchBar>
                     </div>
+                    <div className=" mt-3" onClick={handleUserOrderBtnClick}><FaUser className="hover:bg-[#a1a1aa]" style={{ color: 'white', fontSize: '34px' }}/></div>
                 </div>
             </div>
             {tooltip && tooltip}
