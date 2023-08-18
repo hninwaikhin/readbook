@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { GetCartList, GetFavoriteList } from "../slice/bookListSlice";
 import { useState } from "react";
 import { About } from "./About";
+import { FaRegUser } from "react-icons/fa";
 
 export function MenuBar(props) {
     const navigate = useNavigate();
@@ -38,6 +39,10 @@ export function MenuBar(props) {
         );
     }
 
+    function handleOrderOnClick() {
+
+    }
+
     return (
         <>
             <div className="relative bg-[#737373] h-[68px] w-[1961px] ml-[9px] rounded-md">
@@ -49,6 +54,9 @@ export function MenuBar(props) {
                         <li><div className="mt-[10px] w-[70px] cursor-pointer" onClick={handleCartBtnClick}>{cartList.length > 0 ? <BsFillCartFill className="hover:bg-[#a1a1aa]" style={{ color: 'white', fontSize: '34px' }} /> : <BsCart className="hover:bg-[#a1a1aa]" style={{ color: 'white', fontSize: '34px' }} />}</div></li>
                         <li><div className="mt-[10px] w-[70px] cursor-pointer" onMouseOver={handleAboutBtnMouseOver} onMouseLeave={() => { setTooltip(null); }}><FcAbout className="hover:bg-[#a1a1aa]" style={{ color: 'white', fontSize: '34px' }} /></div></li>
                     </ul>
+                    <div className=" absolute right-0 top-3 hover:bg-[#a1a1aa]" onClick={handleOrderOnClick}>
+                        <FaRegUser style={{ color: 'white', fontSize: '34px' }} />
+                    </div>
                     <div className="w-[1500px]">
                         <SearchBar onSearch={props.onSearch}></SearchBar>
                     </div>

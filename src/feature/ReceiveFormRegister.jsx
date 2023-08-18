@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Address } from "../components/Address";
 import { GetUserInfo } from "../slice/userSlice";
 import { MessageBox } from "../components/MessageBox";
+import { Contact } from "../components/Contact";
 
 function ReceiveFormRegister(props) {
     const [searchParams] = useSearchParams();
@@ -19,10 +20,12 @@ function ReceiveFormRegister(props) {
     const [showChangeAddress, setShowChangeAddress] = useState(null);
     const [loginError, setLoginError] = useState(false);
     const [errMsg, setTitle] = useState({ title: "", text: "" });
+    const [showContactBox, setShowContactBox] = useState(false);
 
-    function handleReceive() {
+    function handleReceive(e) {
+        e.preventDefault();
         if (userInfo.id.length > 0) {
-            // TODO
+            setShowContactBox(true);
         }
         else {
             setTitle({ title: "Send Request", text: "Please log in to send request." });
@@ -74,6 +77,7 @@ function ReceiveFormRegister(props) {
                 text={errMsg.text}
                 onClick={() => { setLoginError(false); }}
             />}
+            {showContactBox && <Contact userInfo={userInfo} onClose={() => { setShowContactBox(false); }}></Contact>}
         </>
     );
 }
