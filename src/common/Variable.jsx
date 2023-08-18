@@ -7,6 +7,7 @@ export const navigateToReceiveRegister = "/readbook/receive";
 export const navigateToDashboard = "/readbook/";
 export const navigateToCart = "/readbook/cartlist";
 export const navigateToFavorite = "/readbook/favoritelist";
+export const navigateToOrder = "/readbook/Order";
 
 export const Tables = {
     User: "User",

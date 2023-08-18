@@ -10,9 +10,10 @@ import Dashboard from "./feature/Dashboard";
 import ReceiveFormRegister from "./feature/ReceiveFormRegister";
 import CartList from "./feature/CartList";
 import FavoriteList from "./feature/FavoriteList";
-import { navigateToReceiveRegister, navigateToBookRegister, navigateToBookRegisteredList, navigateToCart, navigateToDashboard, navigateToLogin, navigateToUserRegister, navigateToFavorite } from "./common/Variable";
+import { navigateToReceiveRegister, navigateToBookRegister, navigateToBookRegisteredList, navigateToCart, navigateToDashboard, navigateToLogin, navigateToUserRegister, navigateToFavorite, navigateToOrder } from "./common/Variable";
 import { Loading } from "./components/Loading";
 import BookRegisteredList from "./feature/BookRegisteredList";
+import { Order } from "./feature/Order";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path={navigateToDashboard} element={<Dashboard />} />
           <Route path={navigateToCart} element={<CartList />} />
           <Route path={navigateToFavorite} element={<FavoriteList></FavoriteList>} />
+          <Route path={navigateToOrder} element={<Order></Order>} />
         </Routes>
       </div>
       {<Loading></Loading>}
