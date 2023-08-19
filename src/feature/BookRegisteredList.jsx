@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import Card from 'react-bootstrap/Card';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from "react-redux";
-import { Tables, deliveryType, navigateToBookRegister } from "../common/Variable";
+import { Tables, bookInfoEmptyObj, deliveryType, navigateToBookRegister, shippingStatus } from "../common/Variable";
 import { MenuBar } from "../components/MenuBar";
 import MainTitle from "../components/MainTitle";
 import { BiBookAdd } from "react-icons/bi";
@@ -13,6 +13,7 @@ import { GetBookType } from "../common/CommonFun";
 import { projectStorage as db } from "../firebase/config";
 import { ConfirmBox } from "../components/ConfirmBox";
 import { setIsShowing } from "../slice/loadingSlice";
+import { MdClose } from "react-icons/md";
 
 function BookRegisteredList(props) {
     const dispatch = useDispatch();
@@ -21,8 +22,11 @@ function BookRegisteredList(props) {
     const [bookRegisteredList, setBookRegisteredList] = useState([]);
     const [bookListBindData, setBookListBindData] = useState([]);
     const [isShowConfirmBox, setIsShowConfirmBox] = useState(false);
-    const [selectedDocumentId, setSelectedDocumentId] = useState("");
+    const [selectedDocument, setSelectedDocument] = useState("");
     const [tooltip, setTooltip] = useState(null);
+    const [isShowShippingStatusChange, setIsShowShippingStatusChange] = useState(false);
+    const [selectedStatus, setSelectedStatus] = useState(shippingStatus.Ordered);
+    const [updatedStatus, setUpdatedStatus] = useState();
 
     useEffect(() => {
         if (userInfo.id.length > 0) {
@@ -37,7 +41,21 @@ function BookRegisteredList(props) {
                         else {
                             let result = [];
                             snapshot.docs.forEach(doc => {
-                                result.push({ id: doc.id, ...doc.data() })
+                                let data = doc.data();
+                                let bookInfo = {
+                                    ...bookInfoEmptyObj,
+                                    userId: data.userId,
+                                    bookName: data.bookName,
+                                    bookType: data.bookType,
+                                    imageUrl: data.imageUrl,
+                                    count: data.count,
+                                    deliveryType: data.deliveryType,
+                                    note: data.note,
+                                    isEnd: data.isEnd,
+                                    status: data.status ?? shippingStatus.None,
+                                    orderedUserId: data.orderedUserId ?? "",
+                                };
+                                result.push({ id: doc.id, ...bookInfo })
                             });
                             setBookListBindData(result);
                             setBookRegisteredList(result);
@@ -48,7 +66,7 @@ function BookRegisteredList(props) {
                 console.error(error);
             }
         }
-    }, [userInfo.id]);
+    }, [userInfo.id, updatedStatus]);
 
     function handleSearch(e) {
         let searchText = e.target.value;
@@ -63,10 +81,10 @@ function BookRegisteredList(props) {
     async function deleteBook(e) {
         e.preventDefault();
         dispatch(setIsShowing(true));
-        const documentRef = db.collection(Tables.BookInfo).doc(selectedDocumentId);
+        const documentRef = db.collection(Tables.BookInfo).doc(selectedDocument.id);
         // Delete the document
         await documentRef.delete();
-        let list = bookListBindData.filter(x => x.id !== selectedDocumentId);
+        let list = bookListBindData.filter(x => x.id !== selectedDocument.id);
         setBookListBindData(list);
         setIsShowConfirmBox(false);
         dispatch(setIsShowing(false));
@@ -85,6 +103,47 @@ function BookRegisteredList(props) {
                 Book Register
             </div>
         );
+    }
+
+    function handleShippingStatus(e, info) {
+        e.preventDefault();
+        setSelectedDocument(info);
+        setIsShowShippingStatusChange(true);
+    }
+
+    function handleStatusChange(e) {
+        e.preventDefault();
+        setSelectedStatus(e.target.value);
+    }
+
+    function handleUpdate(e) {
+        e.preventDefault();
+        const fetch = async () => {
+            let updatedData = {
+                ...bookInfoEmptyObj,
+                userId: selectedDocument.userId,
+                bookName: selectedDocument.bookName,
+                bookType: selectedDocument.bookType,
+                imageUrl: selectedDocument.imageUrl,
+                count: selectedDocument.count,
+                deliveryType: selectedDocument.deliveryType,
+                note: selectedDocument.note,
+                isEnd: false,
+                status: Number(selectedStatus),
+                orderedUserId: userInfo.id
+            }
+            const documentRef = db.collection(Tables.BookInfo).doc(selectedDocument.id);
+            // Use the update method to modify specific fields in the document
+            await documentRef.update(updatedData);
+            console.log('Document updated successfully!');
+            setIsShowShippingStatusChange(false);
+            setUpdatedStatus(Number(selectedStatus));
+        };
+        fetch();
+    }
+
+    const isActiveUpdateBtn = () => {
+        return selectedDocument.status === Number(selectedStatus);
     }
 
     return (
@@ -116,8 +175,17 @@ function BookRegisteredList(props) {
                                         <Card.Text>{"Delivery: " + (info.deliveryType === deliveryType.FreeDelivery ? "Free Delivery" : "COD (Cash On Delivery)")}</Card.Text>
                                         <Card.Text className=" w-[340px] overflow-hidden whitespace-nowrap overflow-ellipsis">{"Note: " + info.note}</Card.Text>
                                         <div className=" flex">
-                                            <Button variant="primary" onClick={(e) => { setIsShowConfirmBox(true); setSelectedDocumentId(info.id); }} >Delete</Button>
+                                            <Button variant="primary" onClick={(e) => { setIsShowConfirmBox(true); setSelectedDocument(info); }} >Delete</Button>
                                             <Button variant="primary" className=" ml-4" onClick={(e) => editBook(e, info.id)}>Edit</Button>
+                                            {info.status !== shippingStatus.None && info.orderedUserId.length > 0 && info.status === shippingStatus.Ordered &&
+                                                <Button variant="secondary" className=" ml-4" onClick={(e) => handleShippingStatus(e, info)}>{"Ordered"}</Button>
+                                            }
+                                            {info.status !== shippingStatus.None && info.orderedUserId.length > 0 && info.status === shippingStatus.Prepare &&
+                                                <Button variant="info" className=" ml-4" onClick={(e) => handleShippingStatus(e, info)}>{"Prepare"}</Button>
+                                            }
+                                            {info.status !== shippingStatus.None && info.orderedUserId.length > 0 && info.status === shippingStatus.Shipped &&
+                                                <Button variant="success" className=" ml-4" onClick={(e) => handleShippingStatus(e, info)}>{"Shipped"}</Button>
+                                            }
                                         </div>
                                     </Card.Body>
                                 </Card>
@@ -135,6 +203,27 @@ function BookRegisteredList(props) {
                     onNoBtnClick={() => { setIsShowConfirmBox(false); }} />
             }
             {tooltip && tooltip}
+            {isShowShippingStatusChange &&
+                <div className="absolute z-10 w-fit h-fit px-3 py-1 text-[32px] bg-white border-2 border-[#94a3b8] rounded-md shadow-2xl left-[550px] top-[150px]" >
+                    <div className="inline-flex">
+                        <label className=" ml-4 mt-3 font-bold text-[32px] w-fit">Change Shipping Status</label>
+                        <MdClose className=" absolute right-2 top-2 hover:bg-[#a1a1aa] cursor-pointer" style={{ color: 'black', fontSize: '28px' }} onClick={() => { setIsShowShippingStatusChange(false); }} />
+                    </div>
+                    <div className="ml-4 mt-7 mr-4">
+                        <label htmlFor="status">Shipping Status:</label>
+                        <div>
+                            <select id="status" className=" mt-2 w-[400px] h-[40px] rounded-md focus:outline-none custom-select text-[16px]"
+                                value={selectedStatus} onChange={handleStatusChange}
+                            >
+                                <option value={shippingStatus.Ordered}>Ordered</option>
+                                <option value={shippingStatus.Prepare}>Prepare</option>
+                                <option value={shippingStatus.Shipped}>Shipped</option>
+                            </select>
+                        </div>
+                        <Button variant="primary" className=" mt-4 mb-10" disabled={isActiveUpdateBtn()} onClick={handleUpdate}>Update</Button>
+                    </div>
+                </div>
+            }
         </>
     );
 }

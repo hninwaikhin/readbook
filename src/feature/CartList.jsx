@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { GetCartList, GetFavoriteList, setCartList, setFavoriteList } from "../slice/bookListSlice";
-import { deliveryType, navigateToReceiveRegister } from "../common/Variable";
+import { deliveryType, navigateToReceiveRegister, shippingStatus } from "../common/Variable";
 import { MenuBar } from "../components/MenuBar";
 import MainTitle from "../components/MainTitle";
 import { GetBookType } from "../common/CommonFun";
@@ -79,7 +79,7 @@ function CartList(props) {
                         <MenuBar onSearch={(e) => handleSearch(e)} />
                     </div>
                     <div className="absolute list-container w-[1990px]">
-                        {bookListBindData.map((info) => (
+                        {bookListBindData && bookListBindData.filter(itm => itm.status !== shippingStatus.Shipped).map((info) => (
                             <div className="list-item mb-4" key={uuidv4()}>
                                 <Card style={{ width: '23rem' }}>
                                     <Card.Img variant="top" className="h-[250px]" src={info.imageUrl} />
@@ -99,7 +99,11 @@ function CartList(props) {
                                     </Card.Body>
                                     <div className="mb-3 ml-4 flex">
                                         <Button variant="primary" onClick={() => handleDeleteBtnClick(info.id)}>Remove</Button>
-                                        {userInfo.id.length > 0 && info.userId !== userInfo.id && <Button variant="primary" className=" ml-4" onClick={(e) => handleReceive(e, info.id)}>Receive</Button>}
+                                        {userInfo.id.length > 0 && info.userId !== userInfo.id && info.status === shippingStatus.None ?
+                                            <Button variant="primary" className=" ml-4" onClick={(e) => handleReceive(e, info.id)}>Receive</Button>
+                                            : info.status !== shippingStatus.None && info.orderedUserId.length > 0 ?
+                                                <Button variant="secondary" className=" ml-4">Ordered</Button> : ""
+                                        }
                                     </div>
                                 </Card>
                             </div>

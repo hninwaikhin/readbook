@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import Card from 'react-bootstrap/Card';
 import { projectStorage as db } from "../firebase/config";
-import { Tables, deliveryType, navigateToReceiveRegister } from "../common/Variable";
+import { Tables, bookInfoEmptyObj, deliveryType, navigateToReceiveRegister, shippingStatus } from "../common/Variable";
 import { v4 as uuidv4 } from 'uuid';
 import { MenuBar } from "../components/MenuBar";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
@@ -35,7 +35,21 @@ function Dashboard(props) {
                 else {
                     let result = [];
                     snapshot.docs.forEach(doc => {
-                        result.push({ id: doc.id, ...doc.data() })
+                        let data = doc.data();
+                        let bookInfo = {
+                            ...bookInfoEmptyObj,
+                            userId: data.userId,
+                            bookName: data.bookName,
+                            bookType: data.bookType,
+                            imageUrl: data.imageUrl,
+                            count: data.count,
+                            deliveryType: data.deliveryType,
+                            note: data.note,
+                            isEnd: data.isEnd,
+                            status: data.status ?? shippingStatus.None,
+                            orderedUserId: data.orderedUserId ?? "",
+                        };
+                        result.push({ id: doc.id, ...bookInfo })
                     });
                     setBookListBindData(result);
                     dispatch(setBookList(result));
@@ -106,7 +120,7 @@ function Dashboard(props) {
                         <MenuBar onSearch={(e) => handleSearch(e)} />
                     </div>
                     <div className="absolute list-container w-[1990px]">
-                        {bookListBindData.map((info) => (
+                        {bookListBindData && bookListBindData.filter(itm => itm.status !== shippingStatus.Shipped).map((info) => (
                             <div className="list-item mb-4" key={uuidv4()}>
                                 <Card style={{ width: '23rem' }}>
                                     <Card.Img variant="top" className="h-[250px]" src={info.imageUrl} />
@@ -126,7 +140,11 @@ function Dashboard(props) {
                                     </Card.Body>
                                     <div className="mb-3 ml-4 flex">
                                         <Button variant="primary" onClick={() => handleAddToCart(info.id)}>Add to Cart</Button>
-                                        {userInfo.id.length > 0 && info.userId !== userInfo.id && <Button variant="primary" className=" ml-4" onClick={(e) => handleReceive(e, info.id)}>Receive</Button>}
+                                        {userInfo.id.length > 0 && info.userId !== userInfo.id && info.status === shippingStatus.None ?
+                                            <Button variant="primary" className=" ml-4" onClick={(e) => handleReceive(e, info.id)}>Receive</Button>
+                                            : info.status !== shippingStatus.None && info.orderedUserId.length > 0 ?
+                                                <Button variant="secondary" className=" ml-4">Ordered</Button> : ""
+                                        }
                                     </div>
                                 </Card>
                             </div>
