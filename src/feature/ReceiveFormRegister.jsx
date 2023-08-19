@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import MainTitle from "../components/MainTitle";
 import { useSelector } from "react-redux";
@@ -11,6 +11,8 @@ import { Address } from "../components/Address";
 import { GetUserInfo } from "../slice/userSlice";
 import { MessageBox } from "../components/MessageBox";
 import { Contact } from "../components/Contact";
+import { projectStorage as db } from "../firebase/config";
+import { Tables } from '../common/Variable';
 
 function ReceiveFormRegister(props) {
     const [searchParams] = useSearchParams();
@@ -21,10 +23,31 @@ function ReceiveFormRegister(props) {
     const [loginError, setLoginError] = useState(false);
     const [errMsg, setTitle] = useState({ title: "", text: "" });
     const [showContactBox, setShowContactBox] = useState(false);
+    const [sendEmailAddress, setSendEmailAddress] = useState("");
+
+    useEffect(() => {
+        const userId = selectedBookInfo && selectedBookInfo.userId.length > 0 ? selectedBookInfo.userId : "";
+        if (userId.length > 0) {
+            try {
+                const fetch = async () => {
+                    const documentRef = db.collection(Tables.User).doc(userId);
+                    const snapshot = await documentRef.get();
+                    if (snapshot.exists) {
+                        const data = { id: snapshot.id, ...snapshot.data() };
+                        setSendEmailAddress(data.email);
+                    }
+                }
+                fetch();
+            }
+            catch (error) {
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     function handleReceive(e) {
         e.preventDefault();
-        if (userInfo.id.length > 0) {
+        if (userInfo.id.length > 0 && sendEmailAddress.length > 0) {
             setShowContactBox(true);
         }
         else {
@@ -77,7 +100,7 @@ function ReceiveFormRegister(props) {
                 text={errMsg.text}
                 onClick={() => { setLoginError(false); }}
             />}
-            {showContactBox && <Contact userInfo={userInfo} onClose={() => { setShowContactBox(false); }}></Contact>}
+            {showContactBox && <Contact userInfo={userInfo} selectedBookInfo={selectedBookInfo} sendEmailAddress={sendEmailAddress} onClose={() => { setShowContactBox(false); }}></Contact>}
         </>
     );
 }
