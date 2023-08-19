@@ -45,6 +45,13 @@ export const bookType = {
     Fiction: 4,
 }
 
+export const shippingStatus = {
+    None: 0,
+    Ordered: 1,
+    Prepare: 2,
+    Shipped: 3,
+}
+
 export const bookInfoEmptyObj = {
     userId: "",
     bookName: "",
@@ -53,7 +60,9 @@ export const bookInfoEmptyObj = {
     count: 0,
     deliveryType: deliveryType.None,
     note: "",
-    isEnd: false
+    isEnd: false,
+    status: shippingStatus.None,
+    orderedUserId: "",
 }
 
 export const cartInfoEmptyObj = {

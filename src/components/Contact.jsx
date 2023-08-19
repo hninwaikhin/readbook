@@ -4,6 +4,8 @@ import { MDBInput } from 'mdb-react-ui-kit';
 import { Button } from "react-bootstrap";
 import { MdClose } from "react-icons/md";
 import { GetBookType } from '../common/CommonFun';
+import { projectStorage as db } from "../firebase/config";
+import { Tables, bookInfoEmptyObj, shippingStatus } from '../common/Variable';
 
 export function Contact(props) {
     const formRef = useRef();
@@ -15,13 +17,35 @@ export function Contact(props) {
 
     const sendEmail = (e) => {
         e.preventDefault();
-        emailjs.sendForm('service_oqhxmdn', 'template_of3e5rc', formRef.current, '3oDkBnYSVc5dycbl0')
-            .then((result) => {
-                console.log(result.text);
-                props.onClose();
-            }, (error) => {
-                console.log(error.text);
-            });
+        if (userInfo.id.length > 0) {
+            emailjs.sendForm('service_oqhxmdn', 'template_of3e5rc', formRef.current, '3oDkBnYSVc5dycbl0')
+                .then((result) => {
+                    console.log(result.text);
+                    const fetch = async () => {
+                        let updatedData = {
+                            ...bookInfoEmptyObj,
+                            userId: selectedBookInfo.userId,
+                            bookName: selectedBookInfo.bookName,
+                            bookType: selectedBookInfo.bookType,
+                            imageUrl: selectedBookInfo.imageUrl,
+                            count: selectedBookInfo.count,
+                            deliveryType: selectedBookInfo.deliveryType,
+                            note: selectedBookInfo.note,
+                            isEnd: false,
+                            status: shippingStatus.Ordered,
+                            orderedUserId: userInfo.id
+                        }
+                        const documentRef = db.collection(Tables.BookInfo).doc(selectedBookInfo.id);
+                        // Use the update method to modify specific fields in the document
+                        await documentRef.update(updatedData);
+                        console.log('Document updated successfully!');
+                    };
+                    fetch();
+                    props.onClose();
+                }, (error) => {
+                    console.log(error.text);
+                });
+        }
     };
 
     return (
