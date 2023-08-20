@@ -116,30 +116,29 @@ function BookRegisteredList(props) {
         setSelectedStatus(e.target.value);
     }
 
-    function handleUpdate(e) {
+    async function handleUpdate(e) {
         e.preventDefault();
-        const fetch = async () => {
-            let updatedData = {
-                ...bookInfoEmptyObj,
-                userId: selectedDocument.userId,
-                bookName: selectedDocument.bookName,
-                bookType: selectedDocument.bookType,
-                imageUrl: selectedDocument.imageUrl,
-                count: selectedDocument.count,
-                deliveryType: selectedDocument.deliveryType,
-                note: selectedDocument.note,
-                isEnd: false,
-                status: Number(selectedStatus),
-                orderedUserId: userInfo.id
-            }
-            const documentRef = db.collection(Tables.BookInfo).doc(selectedDocument.id);
-            // Use the update method to modify specific fields in the document
-            await documentRef.update(updatedData);
-            console.log('Document updated successfully!');
-            setIsShowShippingStatusChange(false);
-            setUpdatedStatus(Number(selectedStatus));
-        };
-        fetch();
+        dispatch(setIsShowing(true));
+        let updatedData = {
+            ...bookInfoEmptyObj,
+            userId: selectedDocument.userId,
+            bookName: selectedDocument.bookName,
+            bookType: selectedDocument.bookType,
+            imageUrl: selectedDocument.imageUrl,
+            count: selectedDocument.count,
+            deliveryType: selectedDocument.deliveryType,
+            note: selectedDocument.note,
+            isEnd: false,
+            status: Number(selectedStatus),
+            orderedUserId: userInfo.id
+        }
+        const documentRef = db.collection(Tables.BookInfo).doc(selectedDocument.id);
+        // Use the update method to modify specific fields in the document
+        await documentRef.update(updatedData);
+        console.log('Document updated successfully!');
+        setIsShowShippingStatusChange(false);
+        setUpdatedStatus(Number(selectedStatus));
+        dispatch(setIsShowing(false));
     }
 
     const isActiveUpdateBtn = () => {

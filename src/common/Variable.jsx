@@ -50,6 +50,7 @@ export const shippingStatus = {
     Ordered: 1,
     Prepare: 2,
     Shipped: 3,
+    Cancel: 4,
 }
 
 export const bookInfoEmptyObj = {

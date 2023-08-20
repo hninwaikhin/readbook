@@ -97,7 +97,8 @@ function FavoriteList(props) {
                                             <Button variant="primary" className=" ml-4" onClick={(e) => handleReceive(e, info.id)}>Receive</Button>
                                             : info.status !== shippingStatus.None && info.orderedUserId.length > 0 ?
                                                 <label className=" ml-4 doubleunderline font-bold">
-                                                    {info.status === shippingStatus.Ordered ? "Ordered" : "Preparing To Ship"}
+                                                    {info.status === shippingStatus.Ordered ? "Ordered" :
+                                                        info.status === shippingStatus.Prepare ? "Preparing To Ship" : ""}
                                                 </label> : ""
                                         }
                                     </div>
