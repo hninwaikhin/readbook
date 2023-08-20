@@ -9,7 +9,7 @@ export function Detail(props) {
 
     return (
         <div className="absolute inset-0 z-10">
-            <div className="relative left-[630px] top-[10px] bg-white border-2 border-[#cbd5e1] rounded-md shadow-2xl w-fit h-fit">
+            <div className={"relative left-[630px] bg-white border-2 border-[#cbd5e1] rounded-md shadow-2xl w-fit h-fit " + props.topPos}>
                 <div className="inline-flex">
                     <label className=" ml-8 mt-8 font-bold text-[46px] w-fit">Book Detail</label>
                     <MdClose className=" absolute right-2 top-2 hover:bg-[#a1a1aa] cursor-pointer" style={{ color: 'black', fontSize: '34px' }} onClick={props.onClose} />
@@ -29,5 +29,9 @@ export function Detail(props) {
                 <Button variant="primary" className=" ml-8 mt-4 mb-4" onClick={props.onClose}>Close</Button>
             </div>
         </div>
-    );
+    );    
+}
+
+Detail.defaultProps = {
+    topPos: 10,
 }

@@ -106,8 +106,12 @@ function Dashboard(props) {
 
     function handleShowDetailDg(e, info) {
         e.preventDefault();
+        let posY = 10;
+        let idx = bookListBindData.findIndex(x => x.id === info.id);
+        let result = Math.trunc(idx / 5);
+        posY = result === 0 ? 10 : result * 400;
         setDialog(
-            <Detail info={info} onClose={() => { setDialog(null); }}></Detail>
+            <Detail topPos={"top-[" + Number(posY) + "px]"} info={info} onClose={() => { setDialog(null); }}></Detail>
         );
     }
 

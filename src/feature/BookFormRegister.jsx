@@ -50,6 +50,9 @@ function BookFormRegister(props) {
     };
 
     const handlePhotoChange = async (e) => {
+        if (selectedBookInfo && selectedBookInfo.imageUrl.length > 0) {
+            URL.revokeObjectURL(selectedBookInfo.imageUrl);
+        }
         setImageUrl(URL.createObjectURL(e.target.files[0]));
         setFileObj(e.target.files[0]);
     };
