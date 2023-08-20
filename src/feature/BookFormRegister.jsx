@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MDBInput } from 'mdb-react-ui-kit';
 import { Button } from "react-bootstrap";
 import { firebaseStorage } from "../firebase/config";
-import { Tables, bookInfoEmptyObj, deliveryType, bookType, navigateToBookRegisteredList } from "../common/Variable";
+import { Tables, bookInfoEmptyObj, deliveryType, bookType, navigateToBookRegisteredList, shippingStatus } from "../common/Variable";
 import { projectStorage as db } from "../firebase/config";
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
@@ -87,7 +87,9 @@ function BookFormRegister(props) {
                     count: Number(count),
                     deliveryType: selectedDeliType,
                     note: note,
-                    isEnd: false
+                    isEnd: false,
+                    status: shippingStatus.None,
+                    orderedUserId: "",
                 }
                 const collectionRef = db.collection(Tables.BookInfo);
                 await collectionRef.add(bookInfo);
@@ -132,7 +134,9 @@ function BookFormRegister(props) {
                     count: Number(count),
                     deliveryType: selectedDeliType,
                     note: note,
-                    isEnd: false
+                    isEnd: false,
+                    status: shippingStatus.None,
+                    orderedUserId: "",
                 }
                 const documentRef = db.collection(Tables.BookInfo).doc(bookId);
                 // Use the update method to modify specific fields in the document
