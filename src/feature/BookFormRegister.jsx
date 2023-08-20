@@ -135,8 +135,8 @@ function BookFormRegister(props) {
                     deliveryType: selectedDeliType,
                     note: note,
                     isEnd: false,
-                    status: shippingStatus.None,
-                    orderedUserId: "",
+                    status: selectedBookInfo.status,
+                    orderedUserId: selectedBookInfo.orderedUserId,
                 }
                 const documentRef = db.collection(Tables.BookInfo).doc(bookId);
                 // Use the update method to modify specific fields in the document

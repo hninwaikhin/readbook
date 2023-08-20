@@ -17,7 +17,9 @@ export function Order(props) {
     let statusList = [shippingStatus.Ordered, shippingStatus.Prepare, shippingStatus.Shipped];
 
     useEffect(() => {
-        getFetchData();
+        if (userInfo.id.length > 0) {
+            getFetchData();
+        }
     }, []);
 
     function getFetchData() {
@@ -69,7 +71,7 @@ export function Order(props) {
             note: selectedDocument.note,
             isEnd: false,
             status: shippingStatus.Cancel,
-            orderedUserId: userInfo.id
+            orderedUserId: selectedDocument.orderedUserId
         }
         const documentRef = db.collection(Tables.BookInfo).doc(selectedDocument.id);
         // Use the update method to modify specific fields in the document

@@ -117,7 +117,7 @@ function BookRegisteredList(props) {
         setSelectedStatus(e.target.value);
     }
 
-    async function handleUpdate(e) {
+    async function handleShippingStatusUpdate(e) {
         e.preventDefault();
         dispatch(setIsShowing(true));
         let updatedData = {
@@ -131,7 +131,7 @@ function BookRegisteredList(props) {
             note: selectedDocument.note,
             isEnd: false,
             status: Number(selectedStatus),
-            orderedUserId: userInfo.id
+            orderedUserId: selectedDocument.orderedUserId
         }
         const documentRef = db.collection(Tables.BookInfo).doc(selectedDocument.id);
         // Use the update method to modify specific fields in the document
@@ -220,7 +220,7 @@ function BookRegisteredList(props) {
                                 <option value={shippingStatus.Shipped}>Shipped</option>
                             </select>
                         </div>
-                        <Button variant="primary" className=" mt-4 mb-10" disabled={isActiveUpdateBtn()} onClick={handleUpdate}>Update</Button>
+                        <Button variant="primary" className=" mt-4 mb-10" disabled={isActiveUpdateBtn()} onClick={handleShippingStatusUpdate}>Update</Button>
                     </div>
                 </div>
             }
