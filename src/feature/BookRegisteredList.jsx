@@ -14,6 +14,7 @@ import { projectStorage as db } from "../firebase/config";
 import { ConfirmBox } from "../components/ConfirmBox";
 import { setIsShowing } from "../slice/loadingSlice";
 import { MdClose } from "react-icons/md";
+import { setBookList } from "../slice/bookListSlice";
 
 function BookRegisteredList(props) {
     const dispatch = useDispatch();
@@ -33,7 +34,6 @@ function BookRegisteredList(props) {
             try {
                 db.collection(Tables.BookInfo)
                     .where('isEnd', '==', false)
-                    .where('userId', '==', userInfo.id)
                     .get().then((snapshot) => {
                         if (snapshot.empty) {
                             setBookListBindData([]);
@@ -57,8 +57,10 @@ function BookRegisteredList(props) {
                                 };
                                 result.push({ id: doc.id, ...bookInfo })
                             });
-                            setBookListBindData(result);
-                            setBookRegisteredList(result);
+                            dispatch(setBookList(result));
+                            let registerList = result.filter(x => x.userId === userInfo.id);
+                            setBookListBindData(registerList);
+                            setBookRegisteredList(registerList);
                         }
                     });
             }

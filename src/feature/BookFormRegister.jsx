@@ -122,6 +122,7 @@ function BookFormRegister(props) {
                 const fileRef = storageRef.child(fileName);
                 await fileRef.put(fileObj);
                 newImgUrl = await fileRef.getDownloadURL();
+                deleteFile();
             }
             else {
                 newImgUrl = selectedBookInfo.imageUrl;
@@ -146,8 +147,7 @@ function BookFormRegister(props) {
                 await documentRef.update(updatedData);
                 console.log('Document updated successfully!');
                 navigate(navigateToBookRegisteredList);
-            }
-            deleteFile();
+            }            
         }
         catch (error) {
             console.error(error);
