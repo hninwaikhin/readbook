@@ -24,13 +24,14 @@ function ReceiveFormRegister(props) {
     const [errMsg, setTitle] = useState({ title: "", text: "" });
     const [showContactBox, setShowContactBox] = useState(false);
     const [sendEmailAddress, setSendEmailAddress] = useState("");
+    const [isSentRequestBtn, setIsSentRequestBtn] = useState(true);
 
     useEffect(() => {
-        const userId = selectedBookInfo && selectedBookInfo.userId.length > 0 ? selectedBookInfo.userId : "";
-        if (userId.length > 0) {
+        const ownerUserId = selectedBookInfo && selectedBookInfo.userId.length > 0 ? selectedBookInfo.userId : "";
+        if (ownerUserId.length > 0) {
             try {
                 const fetch = async () => {
-                    const documentRef = db.collection(Tables.User).doc(userId);
+                    const documentRef = db.collection(Tables.User).doc(ownerUserId);
                     const snapshot = await documentRef.get();
                     if (snapshot.exists) {
                         const data = { id: snapshot.id, ...snapshot.data() };
@@ -68,6 +69,11 @@ function ReceiveFormRegister(props) {
         }
     }
 
+    function handelCloseBtn() {
+        setShowContactBox(false);
+        setIsSentRequestBtn(false);
+    }
+
     return (
         <>
             <div className="relative mt-10 ml-8 w-[1200px] h-[700px]">
@@ -90,7 +96,9 @@ function ReceiveFormRegister(props) {
                             </>}
                         </div>
                         <Button variant="primary" className=" mt-4" onClick={handleChangeAddress}>Change Address</Button>
-                        <Button variant="primary" className=" mt-4 ml-4" onClick={handleReceive}>Send Request</Button>
+                        {isSentRequestBtn ? <Button variant="primary" className=" mt-4 ml-4" onClick={handleReceive}>Send Request</Button>
+                            : <Button variant="secondary" className=" mt-4 ml-4">Ordered</Button>
+                        }
                     </div>
                 }
             </div>
@@ -100,7 +108,12 @@ function ReceiveFormRegister(props) {
                 text={errMsg.text}
                 onClick={() => { setLoginError(false); }}
             />}
-            {showContactBox && <Contact userInfo={userInfo} selectedBookInfo={selectedBookInfo} sendEmailAddress={sendEmailAddress} onClose={() => { setShowContactBox(false); }}></Contact>}
+            {showContactBox && <Contact
+                userInfo={userInfo}
+                selectedBookInfo={selectedBookInfo}
+                sendEmailAddress={sendEmailAddress}
+                onClose={handelCloseBtn} />
+            }
         </>
     );
 }

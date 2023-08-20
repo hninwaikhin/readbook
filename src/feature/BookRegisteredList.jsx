@@ -108,6 +108,7 @@ function BookRegisteredList(props) {
     function handleShippingStatus(e, info) {
         e.preventDefault();
         setSelectedDocument(info);
+        setSelectedStatus(info.status);
         setIsShowShippingStatusChange(true);
     }
 

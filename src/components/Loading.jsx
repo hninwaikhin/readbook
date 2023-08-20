@@ -9,7 +9,7 @@ export function Loading(props) {
     }
 
     return (
-        <div className="flex items-center justify-center absolute inset-0 z-10">
+        <div className="flex items-center justify-center absolute inset-0 z-20">
             <div className="loader"></div>
         </div>
     );

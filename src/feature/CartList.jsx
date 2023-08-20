@@ -99,7 +99,7 @@ function CartList(props) {
                                     </Card.Body>
                                     <div className="mb-3 ml-4 flex">
                                         <Button variant="primary" onClick={() => handleDeleteBtnClick(info.id)}>Remove</Button>
-                                        {userInfo.id.length > 0 && info.userId !== userInfo.id && info.status === shippingStatus.None ?
+                                        {userInfo.id.length > 0 && info.userId !== userInfo.id && (info.status === shippingStatus.None || info.status === shippingStatus.Cancel) ?
                                             <Button variant="primary" className=" ml-4" onClick={(e) => handleReceive(e, info.id)}>Receive</Button>
                                             : info.status !== shippingStatus.None && info.orderedUserId.length > 0 ?
                                                 <label className=" ml-4 doubleunderline font-bold">
