@@ -98,10 +98,16 @@ export function Order(props) {
                                     <Card.Text className=" w-[340px] overflow-hidden whitespace-nowrap overflow-ellipsis">{"Note: " + info.note}</Card.Text>
                                 </Card.Body>
                                 <div className="mb-3 ml-4 flex">
-                                    <Button variant="primary" onClick={(e) => handleCancelBtnClick(e, info)}>Cancel</Button>
+                                    {info.status !== shippingStatus.Shipped &&
+                                        <Button variant="primary" onClick={(e) => handleCancelBtnClick(e, info)}>Cancel</Button>
+                                    }
+                                    {info.status === shippingStatus.Shipped &&
+                                        <Button variant="success">Shipped</Button>
+                                    }
                                     {info.status !== shippingStatus.None && info.orderedUserId.length > 0 ?
                                         <label className=" ml-4 doubleunderline font-bold">
-                                            {info.status === shippingStatus.Ordered ? "Ordered" : "Preparing To Ship"}
+                                            {info.status === shippingStatus.Ordered ? "Ordered" :
+                                                info.status === shippingStatus.Prepare ? "Preparing To Ship" : ""}
                                         </label> : ""
                                     }
                                 </div>
