@@ -54,10 +54,13 @@ export function MenuBar(props) {
                         <li><div className="mt-[10px] w-[70px] cursor-pointer" onClick={handleCartBtnClick}>{cartList.length > 0 ? <BsFillCartFill className="hover:bg-[#a1a1aa]" style={{ color: 'white', fontSize: '34px' }} /> : <BsCart className="hover:bg-[#a1a1aa]" style={{ color: 'white', fontSize: '34px' }} />}</div></li>
                         <li><div className="mt-[10px] w-[70px] cursor-pointer" onMouseOver={handleAboutBtnMouseOver} onMouseLeave={() => { setTooltip(null); }}><FcAbout className="hover:bg-[#a1a1aa]" style={{ color: 'white', fontSize: '34px' }} /></div></li>
                     </ul>
-                    <div className="w-[1500px]">
+                    <div className="w-[1400px]">
                         <SearchBar onSearch={props.onSearch}></SearchBar>
                     </div>
-                    <div className=" mt-3" onClick={handleUserOrderBtnClick}><FaUser className="hover:bg-[#a1a1aa]" style={{ color: 'white', fontSize: '34px' }} /></div>
+                    <div className="flex items-center cursor-pointer w-[160px] mt-3 h-[38px] hover:bg-[#a1a1aa]" onClick={handleUserOrderBtnClick}>
+                        <FaUser style={{ color: '#93c5fd', fontSize: '34px' }} />
+                        <label className="ml-2 text-white text-[18px] cursor-pointer fontfamily">Ordered List</label>
+                    </div>
                 </div>
             </div>
             {tooltip && tooltip}
