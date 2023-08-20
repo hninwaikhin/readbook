@@ -96,7 +96,9 @@ function FavoriteList(props) {
                                         {userInfo.id.length > 0 && info.userId !== userInfo.id && info.status === shippingStatus.None ?
                                             <Button variant="primary" className=" ml-4" onClick={(e) => handleReceive(e, info.id)}>Receive</Button>
                                             : info.status !== shippingStatus.None && info.orderedUserId.length > 0 ?
-                                                <Button variant="secondary" className=" ml-4">Ordered</Button> : ""
+                                                <label className=" ml-4 doubleunderline font-bold">
+                                                    {info.status === shippingStatus.Ordered ? "Ordered" : "Preparing To Ship"}
+                                                </label> : ""
                                         }
                                     </div>
                                 </Card>

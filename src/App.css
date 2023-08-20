@@ -109,3 +109,8 @@ li a:focus {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.doubleunderline {
+  text-decoration: underline solid #525252 10%;   
+  font-size: x-large;
+}
