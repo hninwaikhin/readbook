@@ -8,7 +8,7 @@ export function Detail(props) {
     let info = props.info;
 
     return (
-        <div className="absolute inset-0 z-10">
+        <div className="absolute z-20">
             <div className={"relative left-[630px] bg-white border-2 border-[#cbd5e1] rounded-md shadow-2xl w-fit h-fit " + props.topPos}>
                 <div className="inline-flex">
                     <label className=" ml-8 mt-8 font-bold text-[46px] w-fit">Book Detail</label>

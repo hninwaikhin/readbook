@@ -9,12 +9,14 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { ConfirmBox } from "./ConfirmBox";
 import { projectStorage as db } from "../firebase/config";
+import { AccountSetting } from "./AccountSetting";
 
 function MainTitle(props) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const loginUser = useSelector(GetUserInfo);
     const [isShowConfirmBox, setIsShowConfirmBox] = useState(false);
+    const [isShowSetting, seIsShowSetting] = useState(false);
     const [tooltip, setTooltip] = useState(null);
 
     useEffect(() => {
@@ -30,6 +32,7 @@ function MainTitle(props) {
                             id: data.id,
                             userName: data.userName,
                             email: data.email,
+                            password: data.password,
                             address: {
                                 postalCode: data.address.postalCode,
                                 prefecture: data.address.prefecture,
@@ -94,7 +97,7 @@ function MainTitle(props) {
                                     <div className="flex items-center cursor-pointer w-[110px] h-[38px] hover:bg-[#a1a1aa]"
                                         onMouseOver={handleShowTooltip}
                                         onMouseLeave={() => { setTooltip(null); }}
-                                        onClick={() => { setIsShowConfirmBox(true); }}>
+                                        onClick={() => { seIsShowSetting(true); }}>
                                         <BsPersonCircle className=" ml-1 cursor-pointer" style={{ color: 'black', fontSize: '32px' }} />
                                         <label className="ml-2 text-[18px] cursor-pointer fontfamily" >Logout</label>
                                     </div>
@@ -122,6 +125,10 @@ function MainTitle(props) {
                     }
                 </div>
             </div>
+            {isShowSetting &&
+                <AccountSetting
+                    onLogout={() => { seIsShowSetting(false); setIsShowConfirmBox(true); }} />
+            }
             {isShowConfirmBox &&
                 <ConfirmBox
                     title="Logout"

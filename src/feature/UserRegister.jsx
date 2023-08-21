@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { MDBInput } from 'mdb-react-ui-kit';
 import ErrorMessageText from "../components/ErrorMessageText";
-import { addressEmptyObj, japanPrefectures, navigateToLogin, userEmptyObj } from "../common/Variable";
+import { addressEmptyObj, japanPrefectures, navigateToDashboard, navigateToLogin, userEmptyObj } from "../common/Variable";
 import { projectStorage as db } from "../firebase/config";
 import { Tables } from "../common/Variable";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setIsShowing } from "../slice/loadingSlice";
 import { useNavigate } from "react-router-dom";
 import MainTitle from "../components/MainTitle";
+import { GetUserInfo, setUserInfo } from "../slice/userSlice";
 
 const postalCodeRegex = /^\d{3}-\d{4}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -16,6 +17,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function UserRegister(props) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const userInfo = useSelector(GetUserInfo);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,6 +30,18 @@ function UserRegister(props) {
     const [errorEmail, setErrorEmail] = useState(false);
     const [errorPassword, setErrorPassword] = useState(false);
     const [errorPostalCode, setErrorPostalCode] = useState(false);
+
+    useEffect(() => {
+        if (userInfo && userInfo.id.length > 0) {
+            setUsername(userInfo.userName);
+            setEmail(userInfo.email);
+            setPassword(userInfo.password);
+            setPostalCode(userInfo.address.postalCode);
+            setPrefecture(userInfo.address.prefecture);
+            setCity(userInfo.address.city);
+            setStreetAddress(userInfo.address.streetAddress);
+        }
+    }, []);
 
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
@@ -67,7 +81,7 @@ function UserRegister(props) {
         if (isError === false) {
             dispatch(setIsShowing(true));
             try {
-                let userInfo = {
+                let userInfoObj = {
                     ...userEmptyObj,
                     userName: username,
                     email: email,
@@ -82,7 +96,7 @@ function UserRegister(props) {
                     }
                 }
                 const collectionRef = db.collection(Tables.User);
-                await collectionRef.add(userInfo);
+                await collectionRef.add(userInfoObj);
                 console.log('Document added successfully!');
                 navigate(navigateToLogin);
             } catch (error) {
@@ -116,6 +130,54 @@ function UserRegister(props) {
         return isError;
     }
 
+    async function handleUpdate(e) {
+        e.preventDefault();
+        dispatch(setIsShowing(true));
+        try {
+            let updatedData = {
+                ...userEmptyObj,
+                userName: username,
+                email: email,
+                password: password,
+                isEnd: false,
+                address: {
+                    ...addressEmptyObj,
+                    postalCode: postalCode,
+                    prefecture: prefecture,
+                    city: city,
+                    streetAddress: streetAddress
+                }
+            }
+            const documentRef = db.collection(Tables.User).doc(userInfo.id);
+            // Use the update method to modify specific fields in the document
+            await documentRef.update(updatedData);
+            console.log('Document updated successfully!');
+            navigate(navigateToDashboard);
+            // get updated userInfo
+            const documentRef2 = db.collection(Tables.User).doc(userInfo.id);
+            const snapshot = await documentRef2.get();
+            if (snapshot.exists) {
+                const data = { id: snapshot.id, ...snapshot.data() };
+                dispatch(setUserInfo({
+                    id: data.id,
+                    userName: data.userName,
+                    email: data.email,
+                    password: data.password,
+                    address: {
+                        postalCode: data.address.postalCode,
+                        prefecture: data.address.prefecture,
+                        city: data.address.city,
+                        streetAddress: data.address.streetAddress
+                    }
+                }));
+            }
+        }
+        catch (error) {
+            console.error(error);
+        }
+        dispatch(setIsShowing(false));
+    }
+
     const isActiveBtn = () => {
         return username.length === 0 || email.length === 0 || password.length === 0
             || postalCode.length === 0 || prefecture.length === 0 || city.length === 0
@@ -125,7 +187,7 @@ function UserRegister(props) {
     return (
         <div className="relative mt-8 ml-8 w-[800px]">
             <MainTitle title="User Registration Form" showHomeIcon={true} showUserLogin={false}></MainTitle>
-            <form onSubmit={handleSubmit} className="text-[24px]">
+            <form className="text-[24px]">
                 <div className="mt-4">
                     <label className="w-[100px]" htmlFor="username">Username:</label>
                     <MDBInput type="text" id="username" value={username} onChange={handleUsernameChange} placeholder="Enter your name" />
@@ -170,7 +232,10 @@ function UserRegister(props) {
                     <MDBInput type="text" id="address" value={streetAddress} onChange={handleStreetAddressChange} />
                 </div>
                 <div className="mt-14">
-                    <Button disabled={isActiveBtn()} type="submit">Register</Button>
+                    {userInfo && userInfo.id.length ?
+                        <Button disabled={isActiveBtn()} onClick={handleUpdate} type="submit">Update</Button> :
+                        <Button disabled={isActiveBtn()} onClick={handleSubmit} type="submit">Register</Button>
+                    }
                 </div>
             </form>
         </div>

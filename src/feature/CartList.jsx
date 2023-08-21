@@ -74,7 +74,7 @@ function CartList(props) {
         <>
             <div className="relative mt-8 ml-8 w-[2000px]">
                 <div className=" absolute">
-                    <MainTitle title="Cart List" />
+                    <MainTitle title="Cart" />
                     <div className="mb-2 mt-3">
                         <MenuBar onSearch={(e) => handleSearch(e)} />
                     </div>

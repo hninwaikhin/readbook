@@ -5,12 +5,12 @@ export function ConfirmBox(props) {
     return (
         <div className={"absolute inset-0 z-10"}>
             <div className={"relative bg-white border-2 border-[#cbd5e1] rounded-md shadow-2xl " + props.className}>
-                <div className=" ml-2 mt-2 text-[22px] font-bold">{props.title}</div>
-                <div className=" ml-2 mt-2">
+                <div className=" ml-4 mt-2 text-[22px] font-bold">{props.title}</div>
+                <div className=" ml-4 mt-2">
                     {props.text}
                 </div>
-                <Button type="submit" className=" absolute bottom-2 left-2 w-[70px]" onClick={props.onYesBtnClick}>Yes</Button>
-                <Button type="submit" className=" absolute bottom-2 left-[90px] w-[70px]" onClick={props.onNoBtnClick}>No</Button>
+                <Button type="submit" className=" absolute bottom-3 left-4 w-[70px]" onClick={props.onYesBtnClick}>Yes</Button>
+                <Button type="submit" className=" absolute bottom-3 left-[100px] w-[70px]" onClick={props.onNoBtnClick}>No</Button>
             </div>
         </div>
     );

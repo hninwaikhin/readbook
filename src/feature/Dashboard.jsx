@@ -69,6 +69,7 @@ function Dashboard(props) {
         else {
             setBookListBindData(bookInfoList);
         }
+        setDialog(null);
     }
 
     function handleAddFavorite(id) {
@@ -76,11 +77,13 @@ function Dashboard(props) {
         let list = [...favoriteList];
         list.push(obj)
         dispatch(setFavoriteList(list));
+        setDialog(null);
     }
 
     function handleRemoveFavorite(id) {
         let list = favoriteList.filter(itm => itm.id !== id);
         dispatch(setFavoriteList(list));
+        setDialog(null);
     }
 
     function handleAddToCart(id) {
@@ -91,6 +94,7 @@ function Dashboard(props) {
             list.push(obj)
             dispatch(setCartList(list));
         }
+        setDialog(null);
     }
 
     function handleReceive(e, documentId) {
@@ -102,6 +106,7 @@ function Dashboard(props) {
         const params = new URLSearchParams();
         params.append('bookId', documentId);
         navigate(navigateToReceiveRegister + `?${params.toString()}`);
+        setDialog(null);
     }
 
     function handleShowDetailDg(e, info) {
