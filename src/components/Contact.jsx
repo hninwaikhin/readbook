@@ -41,7 +41,7 @@ export function Contact(props) {
                         console.log('Document updated successfully!');
                     };
                     fetch();
-                    props.onClose();
+                    props.onComplete();
                 }, (error) => {
                     console.log(error.text);
                 });

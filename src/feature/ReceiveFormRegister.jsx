@@ -69,7 +69,7 @@ function ReceiveFormRegister(props) {
         }
     }
 
-    function handelCloseBtn() {
+    function handelComplete() {
         setShowContactBox(false);
         setIsSentRequestBtn(false);
     }
@@ -112,7 +112,8 @@ function ReceiveFormRegister(props) {
                 userInfo={userInfo}
                 selectedBookInfo={selectedBookInfo}
                 sendEmailAddress={sendEmailAddress}
-                onClose={handelCloseBtn} />
+                onComplete={handelComplete}
+                onClose={() => { setShowContactBox(false); }} />
             }
         </>
     );
