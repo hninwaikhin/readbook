@@ -153,7 +153,7 @@ function BookRegisteredList(props) {
             <div className="relative mt-8 ml-8 w-[2000px]">
                 <div className=" absolute">
                     <div className="flex">
-                        <MainTitle title="Your Registered Books" />
+                        <MainTitle title="Your Registered List" />
                         <div className="ml-8 flex items-center cursor-pointer w-[110px] h-[38px] hover:bg-[#a1a1aa]"
                             onMouseOver={handleShowTooltip}
                             onMouseLeave={() => { setTooltip(null); }}

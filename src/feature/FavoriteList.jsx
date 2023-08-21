@@ -72,7 +72,7 @@ function FavoriteList(props) {
         <>
             <div className="relative mt-8 ml-8 w-[2000px]">
                 <div className=" absolute">
-                    <MainTitle title="Favorite Books" />
+                    <MainTitle title="Favorite List" />
                     <div className="mb-2 mt-3">
                         <MenuBar onSearch={(e) => handleSearch(e)} />
                     </div>
