@@ -158,8 +158,8 @@ function BookRegisteredList(props) {
                             onMouseOver={handleShowTooltip}
                             onMouseLeave={() => { setTooltip(null); }}
                             onClick={() => { navigate(navigateToBookRegister); }}>
-                            <BiBookAdd className=" ml-1" style={{ color: 'white', fontSize: '24px' }} />
-                            <label className=" ml-1 text-[18px] cursor-pointer text-white fontfamily">Register</label>
+                            <BiBookAdd className=" ml-1" style={{ color: 'black', fontSize: '24px' }} />
+                            <label className=" ml-1 text-[18px] cursor-pointer fontfamily">Register</label>
                         </div>
                     </div>
                     <div className="mb-2 mt-3">

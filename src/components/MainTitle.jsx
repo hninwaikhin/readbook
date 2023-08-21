@@ -95,8 +95,8 @@ function MainTitle(props) {
                                         onMouseOver={handleShowTooltip}
                                         onMouseLeave={() => { setTooltip(null); }}
                                         onClick={() => { setIsShowConfirmBox(true); }}>
-                                        <BsPersonCircle className=" ml-1 cursor-pointer" style={{ color: 'white', fontSize: '32px' }} />
-                                        <label className="ml-2 text-white text-[18px] cursor-pointer fontfamily" >Logout</label>
+                                        <BsPersonCircle className=" ml-1 cursor-pointer" style={{ color: 'black', fontSize: '32px' }} />
+                                        <label className="ml-2 text-[18px] cursor-pointer fontfamily" >Logout</label>
                                     </div>
                                     :
                                     <div className="flex items-center cursor-pointer w-[110px] h-[38px] hover:bg-[#a1a1aa]"
@@ -104,8 +104,8 @@ function MainTitle(props) {
                                         onMouseLeave={() => { setTooltip(null); }}
                                         onClick={handleLogin}
                                     >
-                                        <BsPersonCircle className=" ml-1 cursor-pointer" style={{ color: 'white', fontSize: '32px' }} />
-                                        <label className="ml-2 text-white text-[18px] cursor-pointer fontfamily">Login</label>
+                                        <BsPersonCircle className=" ml-1 cursor-pointer" style={{ color: 'black', fontSize: '32px' }} />
+                                        <label className="ml-2 text-[18px] cursor-pointer fontfamily">Login</label>
                                     </div>
                                 }
                             </>
@@ -116,8 +116,8 @@ function MainTitle(props) {
                             onMouseOver={handleShowHomeTooltip}
                             onMouseLeave={() => { setTooltip(null); }}
                             onClick={() => { navigate(navigateToDashboard); }}>
-                            <AiOutlineHome style={{ color: 'white', fontSize: '34px' }} />
-                            <label className="ml-2 text-white text-[18px] cursor-pointer fontfamily">Home</label>
+                            <AiOutlineHome style={{ color: 'black', fontSize: '34px' }} />
+                            <label className="ml-2 text-[18px] cursor-pointer fontfamily">Home</label>
                         </div>
                     }
                 </div>

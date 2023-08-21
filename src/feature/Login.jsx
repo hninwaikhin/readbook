@@ -101,16 +101,16 @@ function Login(props) {
                             onMouseOver={handleShowTooltip}
                             onMouseLeave={() => { setTooltip(null); }}
                             onClick={() => { navigate(navigateToUserRegister); }}>
-                            <BiUserPin className=" ml-1" style={{ color: 'white', fontSize: '24px' }}></BiUserPin>
-                            <label className=" ml-1 text-[18px] cursor-pointer text-white fontfamily">Register</label>
+                            <BiUserPin className=" ml-1" style={{ color: 'black', fontSize: '24px' }}></BiUserPin>
+                            <label className=" ml-1 text-[18px] cursor-pointer fontfamily">Register</label>
                         </div>
                     </div>
                     <div className="flex items-center ml-8 hover:bg-[#a1a1aa] cursor-pointer w-[110px] h-[38px]"
                         onMouseOver={handleShowHomeTooltip}
                         onMouseLeave={() => { setTooltip(null); }}
                         onClick={() => { navigate(navigateToDashboard); }}>
-                        <AiOutlineHome style={{ color: 'white', fontSize: '34px' }} />
-                        <label className="ml-2 text-white text-[18px] cursor-pointer fontfamily">Home</label>
+                        <AiOutlineHome style={{ color: 'black', fontSize: '34px' }} />
+                        <label className="ml-2 text-[18px] cursor-pointer fontfamily">Home</label>
                     </div>
                 </div>
                 <div className="w-[500px] text-[24px]">

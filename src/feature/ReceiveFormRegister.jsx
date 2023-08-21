@@ -79,7 +79,7 @@ function ReceiveFormRegister(props) {
             <div className="relative mt-10 ml-8 w-[1200px] h-[700px]">
                 <MainTitle title="Book Reservation" showHomeIcon={true} />
                 {selectedBookInfo &&
-                    <div className="mt-4 ml-3 text-[22px] text-white">
+                    <div className="mt-4 ml-3 text-[22px]">
                         <div className="w-[450px]">
                             <img src={selectedBookInfo.imageUrl} alt="..." />
                         </div>
