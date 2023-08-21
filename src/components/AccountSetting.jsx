@@ -13,7 +13,7 @@ export function AccountSetting(props) {
 
     return (
         <div className={"absolute inset-0 z-10"}>
-            <div className={"relative h-fit  w-[203px] items-center bg-white border-2 border-[#cbd5e1] rounded-md shadow-2xl " + props.className}>
+            <div className={"relative h-fit w-fit items-center bg-white border-2 border-[#cbd5e1] rounded-md shadow-2xl " + props.className}>
                 <div className=" py-3 px-4 hover:bg-[#a1a1aa] cursor-pointer" onClick={handleAccoutSetting}>
                     Account Setting
                 </div>
@@ -27,6 +27,6 @@ export function AccountSetting(props) {
 }
 
 AccountSetting.defaultProps = {
-    className: " w-[350px] h-[150px] left-[500px] top-[50px]",
+    className: " w-[203] h-[150px] left-[500px] top-[50px]",
     onLogout: () => void (0),
 }
