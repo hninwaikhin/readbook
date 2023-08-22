@@ -114,9 +114,9 @@ function Dashboard(props) {
         let posY = 10;
         let idx = bookListBindData.findIndex(x => x.id === info.id);
         let result = Math.trunc(idx / 5);
-        posY = result === 0 ? 10 : result * 400;
+        posY = result === 0 ? 10 : result * 400;        
         setDialog(
-            <Detail topPos={"top-[" + Number(posY) + "px]"} info={info} onClose={() => { setDialog(null); }}></Detail>
+            <Detail posY={"top-[" + Number(posY) + "px]"} posX={"left-[600px]"} info={info} onClose={() => { setDialog(null); }}></Detail>
         );
     }
 
