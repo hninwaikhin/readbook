@@ -127,7 +127,9 @@ function MainTitle(props) {
             </div>
             {isShowSetting &&
                 <AccountSetting
-                    onLogout={() => { seIsShowSetting(false); setIsShowConfirmBox(true); }} />
+                    onLogout={() => { seIsShowSetting(false); setIsShowConfirmBox(true); }}
+                    onClose={() => { seIsShowSetting(false); }}
+                />
             }
             {isShowConfirmBox &&
                 <ConfirmBox
