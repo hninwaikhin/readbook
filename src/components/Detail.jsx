@@ -8,9 +8,9 @@ export function Detail(props) {
     let info = props.info;
 
     return (
-        <div className={"absolute z-10 flex items-center justify-center " + props.posX}>
+        <div className={"absolute z-10 flex items-center justify-center " + props.posX + " " + props.posY}>
             <div>
-                <div className={"relative bg-white border-2 border-[#cbd5e1] rounded-md shadow-2xl w-fit h-fit " + props.posY}>
+                <div className={"relative bg-white border-2 border-[#cbd5e1] rounded-md shadow-2xl w-fit h-fit "}>
                     <div className="inline-flex">
                         <label className=" ml-8 mt-8 font-bold text-[46px] w-fit">Book Detail</label>
                         <MdClose className=" absolute right-2 top-2 hover:bg-[#a1a1aa] cursor-pointer" style={{ color: 'black', fontSize: '34px' }} onClick={props.onClose} />
