@@ -52,7 +52,7 @@ export function Contact(props) {
         <div className='absolute inset-0 z-10'>
             <div className='relative bg-white border-2 left-[600px] text-[24px] w-[400px] top-[100px] border-[#cbd5e1] rounded-md shadow-2xl'>
                 <div className="inline-flex">
-                    <label className=" ml-8 mt-3 font-bold text-[32px] w-fit">Sent Request</label>
+                    <label className=" ml-8 mt-3 font-bold text-[32px] w-fit">Send Request</label>
                     <MdClose className=" absolute right-2 top-2 hover:bg-[#a1a1aa] cursor-pointer" style={{ color: 'black', fontSize: '28px' }} onClick={props.onClose} />
                 </div>
                 <form ref={formRef} onSubmit={sendEmail} className=' m-8'>
