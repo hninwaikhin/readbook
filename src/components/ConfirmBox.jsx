@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 
 export function ConfirmBox(props) {
     return (
-        <div className={"absolute inset-0 z-10"}>
+        <div className={"absolute inset-0 z-20"}>
             <div className={"relative bg-white border-2 border-[#cbd5e1] rounded-md shadow-2xl " + props.className}>
                 <div className=" ml-4 mt-2 text-[22px] font-bold">{props.title}</div>
                 <div className=" ml-4 mt-2">

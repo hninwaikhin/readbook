@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { GetIsShowing } from "../slice/loadingSlice";
 
 export function Loading(props) {
-    const isSHowing = useSelector(GetIsShowing);
-    if (isSHowing === false) {
+    const isShowing = useSelector(GetIsShowing);
+    if (isShowing === false) {
         return null;
     }
 

@@ -11,7 +11,7 @@ export function AccountSetting(props) {
     }
 
     return (
-        <div className={"absolute inset-0 z-10"}>
+        <div className={"absolute inset-0 z-20"}>
             <div className={"relative h-fit w-fit items-center bg-white border-2 border-[#cbd5e1] rounded-md shadow-2xl " + props.className}>
                 <div className=" py-3 px-4 font-bold w-[203] h-[60px] hover:bg-[#a1a1aa] cursor-pointer" onClick={handleAccoutSetting}>
                     Account Setting
