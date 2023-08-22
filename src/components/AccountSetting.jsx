@@ -13,15 +13,15 @@ export function AccountSetting(props) {
     return (
         <div className={"absolute inset-0 z-20"}>
             <div className={"relative h-fit w-fit items-center bg-white border-2 border-[#cbd5e1] rounded-md shadow-2xl " + props.className}>
-                <div className=" py-3 px-4 font-bold w-[203] h-[60px] hover:bg-[#a1a1aa] cursor-pointer" onClick={handleAccoutSetting}>
+                <div className=" py-3 px-3 font-bold w-[200] h-[60px] hover:bg-[#a1a1aa] cursor-pointer" onClick={handleAccoutSetting}>
                     Account Setting
                 </div>
-                <div className=" border-b-2 w-[200px]" />
-                <div className=" py-3 px-4 font-bold w-[203] h-[60px] hover:bg-[#a1a1aa] cursor-pointer" onClick={props.onLogout} >
+                <div className=" border-b-2 w-[170px]" />
+                <div className=" py-3 px-12 font-bold w-[203] h-[60px] hover:bg-[#a1a1aa] cursor-pointer" onClick={props.onLogout} >
                     Logout
                 </div>
-                <div className=" border-b-2 w-[200px]" />
-                <div className="py-3 px-4 font-bold w-[203] h-[60px] hover:bg-[#a1a1aa] cursor-pointer" onClick={props.onClose}>
+                <div className=" border-b-2 w-[170px]" />
+                <div className="py-3 px-14 font-bold w-[203] h-[60px] hover:bg-[#a1a1aa] cursor-pointer" onClick={props.onClose}>
                     Close
                 </div>
             </div>
@@ -30,6 +30,6 @@ export function AccountSetting(props) {
 }
 
 AccountSetting.defaultProps = {
-    className: " left-[500px] top-[50px]",
+    className: " left-[500px] top-[40px]",
     onLogout: () => void (0),
 }
