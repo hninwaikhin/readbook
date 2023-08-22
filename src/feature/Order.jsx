@@ -98,7 +98,7 @@ export function Order(props) {
                                     <Card.Text className=" w-[340px] overflow-hidden whitespace-nowrap overflow-ellipsis">{"Note: " + info.note}</Card.Text>
                                 </Card.Body>
                                 <div className="mb-3 ml-4 flex">
-                                    {info.status !== shippingStatus.Shipped &&
+                                    {(info.status === shippingStatus.Ordered) &&
                                         <Button variant="primary" onClick={(e) => handleCancelBtnClick(e, info)}>Cancel</Button>
                                     }
                                     {info.status === shippingStatus.Shipped &&
