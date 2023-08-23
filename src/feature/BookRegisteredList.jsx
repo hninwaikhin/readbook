@@ -134,7 +134,7 @@ function BookRegisteredList(props) {
 
     function handleStatusChange(e) {
         e.preventDefault();
-        setSelectedStatus(e.target.value);
+        setSelectedStatus(Number(e.target.value));
     }
 
     async function handleShippingStatusUpdate(e) {
@@ -192,7 +192,7 @@ function BookRegisteredList(props) {
                                         <Card.Title><div className="font-bold">{info.bookName}</div></Card.Title>
                                         <Card.Text>{"Type: " + (GetBookType(info.bookType))}</Card.Text>
                                         <Card.Text>{"Count: " + info.count}</Card.Text>
-                                        <Card.Text>{"Delivery: " + (info.deliveryType === deliveryType.FreeDelivery ? "Free Delivery" : "COD (Cash On Delivery)")}</Card.Text>
+                                        <Card.Text>{"Delivery: " + (Number(info.deliveryType) === deliveryType.FreeDelivery ? "Free Delivery" : "COD (Cash On Delivery)")}</Card.Text>
                                         <Card.Text className=" w-[340px] overflow-hidden whitespace-nowrap overflow-ellipsis">{"Note: " + info.note}</Card.Text>
                                         <div className=" flex">
                                             <Button variant="primary" onClick={(e) => { setIsShowConfirmBox(true); setSelectedDocument(info); }} >Delete</Button>

@@ -99,7 +99,7 @@ function CartList(props) {
                                         <Card.Title><div className="font-bold">{info.bookName}</div></Card.Title>
                                         <Card.Text>{"Type: " + (GetBookType(info.bookType))}</Card.Text>
                                         <Card.Text>{"Count: " + info.count}</Card.Text>
-                                        <Card.Text>{"Delivery: " + (info.deliveryType === deliveryType.FreeDelivery ? "Free Delivery" : "COD (Cash On Delivery)")}</Card.Text>
+                                        <Card.Text>{"Delivery: " + (Number(info.deliveryType) === deliveryType.FreeDelivery ? "Free Delivery" : "COD (Cash On Delivery)")}</Card.Text>
                                         <Card.Text className=" w-[340px] overflow-hidden whitespace-nowrap overflow-ellipsis">{"Note: " + info.note}</Card.Text>
                                     </Card.Body>
                                     <div className="mb-3 ml-4 flex">

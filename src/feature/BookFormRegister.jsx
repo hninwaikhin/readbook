@@ -46,7 +46,8 @@ function BookFormRegister(props) {
     };
 
     const handleBookTypeChange = (e) => {
-        setSelectedBookType(e.target.value);
+        let selectValue = e.target.value;
+        setSelectedBookType(Number(selectValue));
     };
 
     const handlePhotoChange = async (e) => {
@@ -62,7 +63,8 @@ function BookFormRegister(props) {
     }
 
     const handleDeliTypeSelectChange = (event) => {
-        setSelectedDeliType(event.target.value);
+        let selectValue = event.target.value;
+        setSelectedDeliType(Number(selectValue));
     };
 
     const handleSubmit = async (e) => {
