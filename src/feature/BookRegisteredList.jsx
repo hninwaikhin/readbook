@@ -92,8 +92,8 @@ function BookRegisteredList(props) {
         let list = bookListBindData.filter(x => x.id !== selectedDocument.id);
         setBookListBindData(list);
         setIsShowConfirmBox(false);
-        dispatch(setIsShowing(false));
         deleteFile();
+        dispatch(setIsShowing(false));        
     }
 
     async function deleteFile() {
