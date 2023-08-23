@@ -39,7 +39,7 @@ function CartList(props) {
     function handleSearch(e) {
         let searchText = e.target.value;
         if (searchText.length > 0) {
-            setBookListBindData(cartList.filter(item => item.bookName.includes(searchText)))
+            setBookListBindData(cartList.filter(item => item.bookName.toLowerCase().includes(searchText.toLowerCase())))
         }
         else {
             setBookListBindData(cartList);
@@ -65,8 +65,13 @@ function CartList(props) {
 
     function handleShowDetailDg(e, info) {
         e.preventDefault();
+        let posY = 10;
+        let idx = bookListBindData.findIndex(x => x.id === info.id);
+        let result = Math.trunc(idx / 5);
+        posY = result === 0 ? 100 : result === 1 ? 400 : result * 200;
+        let top = " top-[" + Number(posY) + "px]";
         setDialog(
-            <Detail info={info} onClose={() => { setDialog(null); }}></Detail>
+            <Detail posY={top} info={info} onClose={() => { setDialog(null); }}></Detail>
         );
     }
 

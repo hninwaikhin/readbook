@@ -15,6 +15,7 @@ import { ConfirmBox } from "../components/ConfirmBox";
 import { setIsShowing } from "../slice/loadingSlice";
 import { MdClose } from "react-icons/md";
 import { setBookList } from "../slice/bookListSlice";
+import { firebaseStorage } from "../firebase/config";
 
 function BookRegisteredList(props) {
     const dispatch = useDispatch();
@@ -57,8 +58,10 @@ function BookRegisteredList(props) {
                                 };
                                 result.push({ id: doc.id, ...bookInfo })
                             });
+                            result.sort((a, b) => a.bookName - b.bookName);
                             dispatch(setBookList(result));
                             let registerList = result.filter(x => x.userId === userInfo.id);
+                            registerList.sort((a, b) => a.bookName - b.bookName);
                             setBookListBindData(registerList);
                             setBookRegisteredList(registerList);
                         }
@@ -73,7 +76,7 @@ function BookRegisteredList(props) {
     function handleSearch(e) {
         let searchText = e.target.value;
         if (searchText.length > 0) {
-            setBookListBindData(bookRegisteredList.filter(item => item.bookName.includes(searchText)))
+            setBookListBindData(bookRegisteredList.filter(item => item.bookName.toLowerCase().includes(searchText.toLowerCase())))
         }
         else {
             setBookListBindData(bookRegisteredList);
@@ -90,6 +93,21 @@ function BookRegisteredList(props) {
         setBookListBindData(list);
         setIsShowConfirmBox(false);
         dispatch(setIsShowing(false));
+        deleteFile();
+    }
+
+    async function deleteFile() {
+        try {
+            const storageRef = firebaseStorage.ref();
+            const fileNameWithQuery = selectedDocument.imageUrl.split('/').pop();
+            const deletefileName = fileNameWithQuery.split('?')[0];
+            const deletefileRef = storageRef.child(deletefileName);
+            // check file exist or not
+            await deletefileRef.getDownloadURL();
+            deletefileRef.delete();
+        } catch (error) {
+            console.log(`File does not exist.`);
+        }
     }
 
     function editBook(e, documentId) {

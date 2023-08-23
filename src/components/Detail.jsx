@@ -8,7 +8,7 @@ export function Detail(props) {
     let info = props.info;
 
     return (
-        <div className={"absolute z-10 flex items-center justify-center " + props.posX + " " + props.posY}>
+        <div className={"absolute z-10 flex items-center justify-center left-[600px] " + props.posY}>
             <div>
                 <div className={"relative bg-white border-2 border-[#cbd5e1] rounded-md shadow-2xl w-fit h-fit "}>
                     <div className="inline-flex">
@@ -35,6 +35,5 @@ export function Detail(props) {
 }
 
 Detail.defaultProps = {
-    posY: "top-[10px]",
-    posX: "left-[600px]",
+    posY: " top-[60px] ",
 }

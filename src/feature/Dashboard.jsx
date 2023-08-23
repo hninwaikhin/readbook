@@ -51,6 +51,7 @@ function Dashboard(props) {
                         };
                         result.push({ id: doc.id, ...bookInfo })
                     });
+                    result.sort((a, b) => a.bookName - b.bookName);
                     setBookListBindData(result);
                     dispatch(setBookList(result));
                 }
@@ -64,7 +65,7 @@ function Dashboard(props) {
     function handleSearch(e) {
         let searchText = e.target.value;
         if (searchText.length > 0) {
-            setBookListBindData(bookInfoList.filter(item => item.bookName.includes(searchText)))
+            setBookListBindData(bookInfoList.filter(item => item.bookName.toLowerCase().includes(searchText.toLowerCase())))
         }
         else {
             setBookListBindData(bookInfoList);
@@ -114,9 +115,10 @@ function Dashboard(props) {
         let posY = 10;
         let idx = bookListBindData.findIndex(x => x.id === info.id);
         let result = Math.trunc(idx / 5);
-        posY = result === 0 ? 80 : result * 400;        
+        posY = result === 0 ? 100 : result === 1 ? 400 : result * 200;
+        let top = " top-[" + Number(posY) + "px]";
         setDialog(
-            <Detail posY={"top-[" + Number(posY) + "px]"} info={info} onClose={() => { setDialog(null); }}></Detail>
+            <Detail posY={top} info={info} onClose={() => { setDialog(null); }}></Detail>
         );
     }
 
