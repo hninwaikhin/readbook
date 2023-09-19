@@ -3,8 +3,7 @@ import { Button } from 'react-bootstrap';
 import { MDBInput } from 'mdb-react-ui-kit';
 import ErrorMessageText from "../components/ErrorMessageText";
 import { projectStorage as db } from "../firebase/config";
-import { Tables, navigateToDashboard, navigateToUserRegister } from "../common/Variable";
-import { useNavigate } from 'react-router-dom';
+import { Tables, currentPage } from "../common/Variable";
 import { BiUserPin } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "../slice/userSlice";
@@ -12,12 +11,10 @@ import { AiOutlineHome } from "react-icons/ai";
 
 function Login(props) {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [tooltip, setTooltip] = useState(null);
-
 
     function handleEmailChange(e) {
         setEmail(e.target.value);
@@ -75,7 +72,7 @@ function Login(props) {
                                 }
                             }));
                             localStorage.setItem('userId', user.id);
-                            navigate(navigateToDashboard);
+                            props.setCurrPage(currentPage.Dashboard);
                             console.log("OK");
                         }
                         else {
@@ -100,7 +97,7 @@ function Login(props) {
                         <div className="ml-8 flex items-center cursor-pointer w-[110px] h-[38px] hover:bg-[#a1a1aa]"
                             onMouseOver={handleShowTooltip}
                             onMouseLeave={() => { setTooltip(null); }}
-                            onClick={() => { navigate(navigateToUserRegister); }}>
+                            onClick={() => { props.setCurrPage(currentPage.UserRegister); }}>
                             <BiUserPin className=" ml-1" style={{ color: 'black', fontSize: '24px' }}></BiUserPin>
                             <label className=" ml-1 text-[18px] cursor-pointer fontfamily">Register</label>
                         </div>
@@ -108,7 +105,7 @@ function Login(props) {
                     <div className="flex items-center ml-8 hover:bg-[#a1a1aa] cursor-pointer w-[110px] h-[38px]"
                         onMouseOver={handleShowHomeTooltip}
                         onMouseLeave={() => { setTooltip(null); }}
-                        onClick={() => { navigate(navigateToDashboard); }}>
+                        onClick={() => { props.setCurrPage(currentPage.Dashboard); }}>
                         <AiOutlineHome style={{ color: 'black', fontSize: '34px' }} />
                         <label className="ml-2 text-[18px] cursor-pointer fontfamily">Home</label>
                     </div>

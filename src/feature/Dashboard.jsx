@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import Card from 'react-bootstrap/Card';
 import { projectStorage as db } from "../firebase/config";
-import { Tables, bookInfoEmptyObj, deliveryType, navigateToReceiveRegister, shippingStatus } from "../common/Variable";
+import { Tables, bookInfoEmptyObj, currentPage, deliveryType, shippingStatus } from "../common/Variable";
 import { v4 as uuidv4 } from 'uuid';
 import { MenuBar } from "../components/MenuBar";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
@@ -10,13 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import MainTitle from "../components/MainTitle";
 import { GetBookList, GetCartList, GetFavoriteList, setBookList, setCartList, setFavoriteList } from "../slice/bookListSlice";
 import { GetBookType } from "../common/CommonFun";
-import { useNavigate } from "react-router-dom";
 import { Detail } from "../components/Detail";
 import { MessageBox } from "../components/MessageBox";
 import { GetUserInfo } from "../slice/userSlice";
 
 function Dashboard(props) {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const bookInfoList = useSelector(GetBookList);
     const [bookListBindData, setBookListBindData] = useState([]);
@@ -104,9 +102,8 @@ function Dashboard(props) {
             setLoginError(true);
             return;
         }
-        const params = new URLSearchParams();
-        params.append('bookId', documentId);
-        navigate(navigateToReceiveRegister + `?${params.toString()}`);
+        props.setCurrPage(currentPage.ReceiveFormRegister);
+        props.setSelectedBookId(documentId);
         setDialog(null);
     }
 
@@ -126,9 +123,9 @@ function Dashboard(props) {
         <>
             <div className="relative mt-8 ml-8 w-[2000px]">
                 <div className=" absolute">
-                    <MainTitle title="Sharing Books" />
+                    <MainTitle title="Sharing Books" setCurrPage={props.setCurrPage} />
                     <div className="mb-2 mt-3">
-                        <MenuBar onSearch={(e) => handleSearch(e)} />
+                        <MenuBar onSearch={(e) => handleSearch(e)} setCurrPage={props.setCurrPage} />
                     </div>
                     <div className="absolute list-container w-[1990px]">
                         {bookListBindData && bookListBindData.filter(itm => itm.status !== shippingStatus.Shipped).map((info) => (

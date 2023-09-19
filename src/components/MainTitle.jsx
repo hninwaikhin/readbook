@@ -1,8 +1,7 @@
 import React from "react";
 import { BsPersonCircle } from "react-icons/bs";
 import { AiOutlineHome } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
-import { Tables, navigateToDashboard, navigateToLogin } from "../common/Variable";
+import { Tables, currentPage } from "../common/Variable";
 import { useDispatch, useSelector } from "react-redux";
 import { GetUserInfo, setUserInfo } from "../slice/userSlice";
 import { useEffect } from "react";
@@ -13,7 +12,6 @@ import { AccountSetting } from "./AccountSetting";
 
 function MainTitle(props) {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const loginUser = useSelector(GetUserInfo);
     const [isShowConfirmBox, setIsShowConfirmBox] = useState(false);
     const [isShowSetting, seIsShowSetting] = useState(false);
@@ -58,7 +56,7 @@ function MainTitle(props) {
 
     function handleLogin(e) {
         e.stopPropagation();
-        navigate(navigateToLogin);
+        props.setCurrPage(currentPage.Login);
     }
 
     function handleShowTooltip() {
@@ -118,7 +116,7 @@ function MainTitle(props) {
                         <div className="flex items-center ml-8 hover:bg-[#a1a1aa] cursor-pointer w-[110px] h-[38px]"
                             onMouseOver={handleShowHomeTooltip}
                             onMouseLeave={() => { setTooltip(null); }}
-                            onClick={() => { navigate(navigateToDashboard); }}>
+                            onClick={() => { props.setCurrPage(currentPage.Dashboard); }}>
                             <AiOutlineHome style={{ color: 'black', fontSize: '34px' }} />
                             <label className="ml-2 text-[18px] cursor-pointer fontfamily">Home</label>
                         </div>
@@ -127,6 +125,7 @@ function MainTitle(props) {
             </div>
             {isShowSetting &&
                 <AccountSetting
+                    setCurrPage={props.setCurrPage}
                     onLogout={() => { seIsShowSetting(false); setIsShowConfirmBox(true); }}
                     onClose={() => { seIsShowSetting(false); }}
                 />

@@ -3,8 +3,7 @@ import { AiOutlineHome, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { BiBookAdd } from "react-icons/bi";
 import { BsCart, BsFillCartFill } from "react-icons/bs";
 import { FcAbout } from "react-icons/fc";
-import { useNavigate } from "react-router-dom";
-import { navigateToBookRegisteredList, navigateToCart, navigateToDashboard, navigateToFavorite, navigateToOrder } from "../common/Variable";
+import { currentPage } from "../common/Variable";
 import { useSelector } from "react-redux";
 import { GetCartList, GetFavoriteList } from "../slice/bookListSlice";
 import { useState } from "react";
@@ -12,25 +11,24 @@ import { About } from "./About";
 import { FaUser } from "react-icons/fa";
 
 export function MenuBar(props) {
-    const navigate = useNavigate();
     const favoriteList = useSelector(GetFavoriteList);
     const cartList = useSelector(GetCartList);
     const [tooltip, setTooltip] = useState(null);
 
     function handleHomeBtnClick() {
-        navigate(navigateToDashboard);
+        props.setCurrPage(currentPage.Dashboard);
     }
 
     function handleBookAddBtnClick() {
-        navigate(navigateToBookRegisteredList);
+        props.setCurrPage(currentPage.BookRegisteredList);
     }
 
     function HandleFavoriteBtnClick() {
-        navigate(navigateToFavorite);
+        props.setCurrPage(currentPage.FavoriteList);
     }
 
     function handleCartBtnClick() {
-        navigate(navigateToCart);
+        props.setCurrPage(currentPage.CartList);
     }
 
     function handleAboutBtnMouseOver() {
@@ -40,7 +38,7 @@ export function MenuBar(props) {
     }
 
     function handleUserOrderBtnClick() {
-        navigate(navigateToOrder);
+        props.setCurrPage(currentPage.Order);
     }
 
     return (

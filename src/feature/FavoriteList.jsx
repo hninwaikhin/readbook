@@ -5,17 +5,15 @@ import { v4 as uuidv4 } from 'uuid';
 import { AiFillHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { GetFavoriteList, setFavoriteList, GetCartList, setCartList } from "../slice/bookListSlice";
-import { deliveryType, navigateToReceiveRegister, shippingStatus } from "../common/Variable";
+import { currentPage, deliveryType, shippingStatus } from "../common/Variable";
 import { MenuBar } from "../components/MenuBar";
 import MainTitle from "../components/MainTitle";
 import { GetBookType } from "../common/CommonFun";
-import { useNavigate } from "react-router-dom";
 import { Detail } from "../components/Detail";
 import { MessageBox } from "../components/MessageBox";
 import { GetUserInfo } from "../slice/userSlice";
 
 function FavoriteList(props) {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const favoriteList = useSelector(GetFavoriteList);
     const [bookListBindData, setBookListBindData] = useState(favoriteList);
@@ -56,9 +54,8 @@ function FavoriteList(props) {
             setLoginError(true);
             return;
         }
-        const params = new URLSearchParams();
-        params.append('bookId', documentId);
-        navigate(navigateToReceiveRegister + `?${params.toString()}`);
+        props.setCurrPage(currentPage.ReceiveFormRegister);
+        props.setSelectedBookId(documentId);
     }
 
     function handleShowDetailDg(e, info) {
@@ -77,9 +74,9 @@ function FavoriteList(props) {
         <>
             <div className="relative mt-8 ml-8 w-[2000px]">
                 <div className=" absolute">
-                    <MainTitle title="Favorite List" />
+                    <MainTitle title="Favorite List" setCurrPage={props.setCurrPage} />
                     <div className="mb-2 mt-3">
-                        <MenuBar onSearch={(e) => handleSearch(e)} />
+                        <MenuBar onSearch={(e) => handleSearch(e)} setCurrPage={props.setCurrPage} />
                     </div>
                     <div className="absolute list-container w-[1990px]">
                         {bookListBindData && bookListBindData.filter(itm => itm.status !== shippingStatus.Shipped).map((info) => (

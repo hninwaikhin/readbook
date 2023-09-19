@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { MDBInput } from 'mdb-react-ui-kit';
 import ErrorMessageText from "../components/ErrorMessageText";
-import { addressEmptyObj, japanPrefectures, navigateToDashboard, navigateToLogin, userEmptyObj } from "../common/Variable";
+import { addressEmptyObj, currentPage, japanPrefectures, userEmptyObj } from "../common/Variable";
 import { projectStorage as db } from "../firebase/config";
 import { Tables } from "../common/Variable";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsShowing } from "../slice/loadingSlice";
-import { useNavigate } from "react-router-dom";
 import MainTitle from "../components/MainTitle";
 import { GetUserInfo, setUserInfo } from "../slice/userSlice";
 
@@ -15,7 +14,6 @@ const postalCodeRegex = /^\d{3}-\d{4}$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function UserRegister(props) {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const userInfo = useSelector(GetUserInfo);
     const [username, setUsername] = useState('');
@@ -98,7 +96,7 @@ function UserRegister(props) {
                 const collectionRef = db.collection(Tables.User);
                 await collectionRef.add(userInfoObj);
                 console.log('Document added successfully!');
-                navigate(navigateToLogin);
+                props.setCurrPage(currentPage.Login);
             } catch (error) {
                 console.error('Error adding document:', error);
             }
@@ -152,7 +150,7 @@ function UserRegister(props) {
             // Use the update method to modify specific fields in the document
             await documentRef.update(updatedData);
             console.log('Document updated successfully!');
-            navigate(navigateToDashboard);
+            props.setCurrPage(currentPage.Dashboard);
             // get updated userInfo
             const documentRef2 = db.collection(Tables.User).doc(userInfo.id);
             const snapshot = await documentRef2.get();
@@ -186,7 +184,7 @@ function UserRegister(props) {
 
     return (
         <div className="relative mt-8 ml-8 w-[800px]">
-            <MainTitle title="User Registration Form" showHomeIcon={true} showUserLogin={false}></MainTitle>
+            <MainTitle title="User Registration Form" showHomeIcon={true} showUserLogin={false} setCurrPage={props.setCurrPage}></MainTitle>
             <form className="text-[24px]">
                 <div className="mt-4">
                     <label className="w-[100px]" htmlFor="username">Username:</label>

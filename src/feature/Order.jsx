@@ -84,7 +84,7 @@ export function Order(props) {
     return (
         <>
             <div className="relative mt-8 ml-8 w-[1200px] h-[700px]">
-                <MainTitle title="Your Ordered List" showHomeIcon={true} />
+                <MainTitle title="Your Ordered List" showHomeIcon={true} setCurrPage={props.setCurrPage} />
                 <div className="absolute list-container w-[1990px] mt-4">
                     {bookListBindData && bookListBindData.map((info) => (
                         <div className="list-item mb-4" key={uuidv4()}>

@@ -1,14 +1,4 @@
 
-export const navigateToLogin = "/readbook/login";
-export const navigateToUserRegister = "/readbook/userregister";
-export const navigateToBookRegister = "/readbook/bookregister";
-export const navigateToBookRegisteredList = "/readbook/bookregisterlist";
-export const navigateToReceiveRegister = "/readbook/receive";
-export const navigateToDashboard = "/readbook/";
-export const navigateToCart = "/readbook/cartlist";
-export const navigateToFavorite = "/readbook/favoritelist";
-export const navigateToOrder = "/readbook/Order";
-
 export const Tables = {
     User: "User",
     BookInfo: "BookInfo",
@@ -123,3 +113,15 @@ export const japanPrefectures = [
     "Yamaguchi",
     "Yamanashi",
 ];
+
+export const currentPage = {
+    Dashboard: 0,
+    Login: 1,
+    UserRegister: 2,
+    BookFormRegister: 3,
+    BookRegisteredList: 4,
+    CartList: 5,
+    FavoriteList: 6,
+    ReceiveFormRegister: 7,
+    Order: 8,
+}

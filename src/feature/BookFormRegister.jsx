@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MDBInput } from 'mdb-react-ui-kit';
 import { Button } from "react-bootstrap";
 import { firebaseStorage } from "../firebase/config";
-import { Tables, bookInfoEmptyObj, deliveryType, bookType, navigateToBookRegisteredList, shippingStatus } from "../common/Variable";
+import { Tables, bookInfoEmptyObj, deliveryType, bookType, shippingStatus, currentPage } from "../common/Variable";
 import { projectStorage as db } from "../firebase/config";
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from "react-redux";
@@ -10,16 +10,13 @@ import { setIsShowing } from "../slice/loadingSlice";
 import MainTitle from "../components/MainTitle";
 import { GetUserInfo } from "../slice/userSlice";
 import { MessageBox } from "../components/MessageBox";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import { GetBookInfo } from "../slice/bookListSlice";
 import { useEffect } from "react";
 
 function BookFormRegister(props) {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const userInfo = useSelector(GetUserInfo);
-    const [searchParams] = useSearchParams();
-    const bookId = searchParams.get('bookId');
+    const bookId = props.bookId ?? -1;
     const selectedBookInfo = useSelector((state) => GetBookInfo(state, bookId));
     const [bookName, setBookName] = useState('');
     const [selectedBookType, setSelectedBookType] = useState(bookType.None);
@@ -99,7 +96,7 @@ function BookFormRegister(props) {
                 const collectionRef = db.collection(Tables.BookInfo);
                 await collectionRef.add(bookInfo);
                 console.log('Document added successfully!');
-                navigate(navigateToBookRegisteredList);
+                props.setCurrPage(currentPage.BookRegisteredList);
             }
         }
         catch (error) {
@@ -148,8 +145,8 @@ function BookFormRegister(props) {
                 // Use the update method to modify specific fields in the document
                 await documentRef.update(updatedData);
                 console.log('Document updated successfully!');
-                navigate(navigateToBookRegisteredList);
-            }            
+                props.setCurrPage(currentPage.BookRegisteredList);
+            }
         }
         catch (error) {
             console.error(error);
@@ -178,7 +175,7 @@ function BookFormRegister(props) {
     return (
         <>
             <div className="relative mt-8 ml-8 w-[1200px] h-[700px]">
-                <MainTitle title="Book Registration Form" showHomeIcon={true} />
+                <MainTitle title="Book Registration Form" showHomeIcon={true} setCurrPage={props.setCurrPage} />
                 <div className="flex text-[24px]">
                     <form className="w-[800px]">
                         <div className="mt-4">

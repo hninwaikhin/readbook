@@ -15,8 +15,7 @@ import { projectStorage as db } from "../firebase/config";
 import { Tables } from '../common/Variable';
 
 function ReceiveFormRegister(props) {
-    const [searchParams] = useSearchParams();
-    const bookId = searchParams.get('bookId');
+    const bookId = props.bookId ?? -1;
     const userInfo = useSelector(GetUserInfo);
     const selectedBookInfo = useSelector((state) => GetBookInfo(state, bookId));
     const [showChangeAddress, setShowChangeAddress] = useState(null);
@@ -77,7 +76,7 @@ function ReceiveFormRegister(props) {
     return (
         <>
             <div className="relative mt-10 ml-8 w-[1200px] h-[700px]">
-                <MainTitle title="Book Reservation" showHomeIcon={true} />
+                <MainTitle title="Book Reservation" showHomeIcon={true} setCurrPage={props.setCurrPage} />
                 {selectedBookInfo &&
                     <div className="mt-4 ml-3 text-[22px]">
                         <div className="w-[450px]">

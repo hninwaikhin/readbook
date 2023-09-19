@@ -1,13 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { navigateToUserRegister } from "../common/Variable";
+import { currentPage } from "../common/Variable";
 
 export function AccountSetting(props) {
-    const navigate = useNavigate();
 
     function handleAccoutSetting(e) {
         e.stopPropagation();
-        navigate(navigateToUserRegister);
+        props.setCurrPage(currentPage.UserRegister);
     }
 
     return (

@@ -3,11 +3,10 @@ import { Button } from "react-bootstrap";
 import Card from 'react-bootstrap/Card';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from "react-redux";
-import { Tables, bookInfoEmptyObj, deliveryType, navigateToBookRegister, shippingStatus } from "../common/Variable";
+import { Tables, bookInfoEmptyObj, currentPage, deliveryType, shippingStatus } from "../common/Variable";
 import { MenuBar } from "../components/MenuBar";
 import MainTitle from "../components/MainTitle";
 import { BiBookAdd } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
 import { GetUserInfo } from "../slice/userSlice";
 import { GetBookType } from "../common/CommonFun";
 import { projectStorage as db } from "../firebase/config";
@@ -19,7 +18,6 @@ import { firebaseStorage } from "../firebase/config";
 
 function BookRegisteredList(props) {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const userInfo = useSelector(GetUserInfo);
     const [bookRegisteredList, setBookRegisteredList] = useState([]);
     const [bookListBindData, setBookListBindData] = useState([]);
@@ -93,7 +91,7 @@ function BookRegisteredList(props) {
         setBookListBindData(list);
         setIsShowConfirmBox(false);
         deleteFile();
-        dispatch(setIsShowing(false));        
+        dispatch(setIsShowing(false));
     }
 
     async function deleteFile() {
@@ -112,9 +110,10 @@ function BookRegisteredList(props) {
 
     function editBook(e, documentId) {
         e.preventDefault();
-        const params = new URLSearchParams();
-        params.append('bookId', documentId);
-        navigate(navigateToBookRegister + `?${params.toString()}`);
+        //const params = new URLSearchParams();
+        //params.append('bookId', documentId);
+        props.setCurrPage(currentPage.BookFormRegister);
+        props.setSelectedBookId(documentId);
     }
 
     function handleShowTooltip() {
@@ -171,17 +170,17 @@ function BookRegisteredList(props) {
             <div className="relative mt-8 ml-8 w-[2000px]">
                 <div className=" absolute">
                     <div className="flex">
-                        <MainTitle title="Your Registered List" />
+                        <MainTitle title="Your Registered List" setCurrPage={props.setCurrPage} />
                         <div className="ml-8 flex items-center cursor-pointer w-[110px] h-[38px] hover:bg-[#a1a1aa]"
                             onMouseOver={handleShowTooltip}
                             onMouseLeave={() => { setTooltip(null); }}
-                            onClick={() => { navigate(navigateToBookRegister); }}>
+                            onClick={() => { props.setCurrPage(currentPage.BookFormRegister); }}>
                             <BiBookAdd className=" ml-1" style={{ color: 'black', fontSize: '24px' }} />
                             <label className=" ml-1 text-[18px] cursor-pointer fontfamily">Register</label>
                         </div>
                     </div>
                     <div className="mb-2 mt-3">
-                        <MenuBar onSearch={(e) => handleSearch(e)} />
+                        <MenuBar onSearch={(e) => handleSearch(e)} setCurrPage={props.setCurrPage} />
                     </div>
                     <div className="absolute list-container w-[1990px]">
                         {bookListBindData.map((info) => (
